@@ -1,4 +1,4 @@
-# 💾 terraform/rds.tf - Relational Database Instance Layer
+# terraform/rds.tf - Relational Database Instance Layer
 
 # 1. Create a second isolated subnet in a different AZ (Required by AWS RDS)
 resource "aws_subnet" "database_private_b" {
@@ -30,8 +30,8 @@ resource "aws_db_instance" "postgres_db" {
   engine_version         = "15.4"
   instance_class         = "db.t4g.micro" # Cost-optimized AWS Graviton processing core
   db_name                = "production_ledger"
-  username               = "ledger_admin"
-  password               = "SecurePassword123!" # Matches your application tier rules
+  username               = var.db_username
+  password               = var.db_password # Supplied via TF_VAR_db_password / tfvars, never hard-coded
   db_subnet_group_name   = aws_db_subnet_group.db_storage_group.name
   vpc_security_group_ids = [aws_security_group.db_security_perimeter.id]
   skip_final_snapshot    = true # Prevents retention lock holding when tearing down dev stacks

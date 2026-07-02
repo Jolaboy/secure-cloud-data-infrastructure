@@ -4,6 +4,10 @@
 *.tfstate.backup
 .terraform.lock.hcl
 
+# Secrets — never commit variable values
+*.tfvars
+!*.tfvars.example
+
 # Operating system files
 .DS_Store
 Thumbs.db
